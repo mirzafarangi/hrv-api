@@ -11,6 +11,7 @@ from app.core.crud import (
     get_sessions_by_user,
     get_sessions_by_tag
 )
+from app.models.sql_models import User, HRVSession, Device, Tag
 from typing import List
 
 router = APIRouter()
@@ -140,3 +141,34 @@ async def get_session_details(session_id: str, db: Session = Depends(get_db)):
         response["indexes"] = session.metrics.indexes
     
     return response
+
+@router.get("/hrv/database-stats", response_model=dict)
+async def get_database_stats(db: Session = Depends(get_db)):
+    """Get basic statistics about the database contents"""
+    user_count = db.query(User).count()
+    session_count = db.query(HRVSession).count()
+    device_count = db.query(Device).count()
+    tag_count = db.query(Tag).count()
+    
+    # Get the latest sessions
+    latest_sessions = db.query(HRVSession).order_by(HRVSession.created_at.desc()).limit(5).all()
+    
+    return {
+        "stats": {
+            "users": user_count,
+            "sessions": session_count,
+            "devices": device_count,
+            "tags": tag_count
+        },
+        "latest_sessions": [
+            {
+                "id": session.id,
+                "recording_session_id": session.recording_session_id,
+                "timestamp": session.timestamp,
+                "user_id": session.user_id,
+                "valid": session.valid,
+                "created_at": session.created_at
+            }
+            for session in latest_sessions
+        ]
+    }
