@@ -1,7 +1,7 @@
-# File: core/validator.py
+# app/core/validator.py
 import numpy as np
 from typing import List, Tuple, Dict
-from models.session import RawHRVData
+from app.models.schemas import RawHRVData
 
 class HRVValidator:
     MIN_RR = 300  # ms
@@ -18,6 +18,7 @@ class HRVValidator:
         self.valid = True
         self.reasons = []
         self.cleaned_rr = []
+        self.quality_label = "excellent"
     
     def validate_range(self) -> List[int]:
         """Apply range filter to RR intervals"""

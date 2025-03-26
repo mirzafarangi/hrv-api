@@ -1,8 +1,8 @@
-# File: models/record.py
+# app/models/record.py
 from dataclasses import dataclass, asdict
 from typing import Dict, Optional, Any
-from models.session import SessionMetrics
-from models.metadata import SessionMetadata
+from app.models.schemas import SessionMetrics
+from app.models.metadata import SessionMetadata
 
 @dataclass
 class SessionRecord:

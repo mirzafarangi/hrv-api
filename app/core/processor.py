@@ -1,11 +1,11 @@
-# File: core/processor.py
+# app/core/processor.py
 from typing import Dict, Optional, Tuple, Any
-from models.session import SessionMetrics, RawHRVData
-from models.metadata import SessionMetadata
-from models.record import SessionRecord
-from core.indexes import build_metric_indexes
-from core.validator import HRVValidator
-from core.metrics import calculate_basic_metrics
+from app.models.schemas import SessionMetrics, RawHRVData
+from app.models.metadata import SessionMetadata
+from app.models.record import SessionRecord
+from app.core.indexes import build_metric_indexes
+from app.core.validator import HRVValidator
+from app.core.metrics import calculate_basic_metrics
 
 class HRVSessionProcessor:
     def __init__(self, raw_data: RawHRVData):

@@ -1,4 +1,4 @@
-# File: models/metadata.py
+# app/models/metadata.py
 from dataclasses import dataclass
 from typing import List, Dict, Optional, Any
 

@@ -1,6 +1,6 @@
-# File: core/indexes.py
-from models.session import SessionMetrics
-from constants.interpretations import INTERPRETATIONS_MAP
+# app/core/indexes.py
+from app.models.schemas import SessionMetrics
+from app.constants.interpretations import INTERPRETATIONS_MAP
 
 def interpret(label: str) -> str:
     return INTERPRETATIONS_MAP.get(label, "No interpretation available.")

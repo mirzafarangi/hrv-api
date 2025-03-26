@@ -4,9 +4,21 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.api.session_handler import router as session_router
 from app.config import settings
 from app.core.database import engine, Base
+import logging
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+)
+logger = logging.getLogger(__name__)
 
 # Create tables
-Base.metadata.create_all(bind=engine)
+try:
+    Base.metadata.create_all(bind=engine)
+    logger.info("Successfully created database tables")
+except Exception as e:
+    logger.error(f"Error creating tables: {e}")
 
 # Initialize FastAPI app
 app = FastAPI(
@@ -37,6 +49,20 @@ async def root():
         "message": "Welcome to the HRV Metrics API",
         "version": settings.API_VERSION,
         "docs": "/docs"
+    }
+
+# Debug endpoint to check environment
+@app.get("/debug", tags=["Debug"])
+async def debug():
+    """Endpoint for debugging deployment issues"""
+    return {
+        "database_url": settings.DATABASE_URL.replace(
+            # Hide password in response
+            settings.DATABASE_URL.split("@")[0].split(":")[-1],
+            "********"
+        ),
+        "debug_mode": settings.DEBUG,
+        "api_version": settings.API_VERSION
     }
 
 if __name__ == "__main__":
