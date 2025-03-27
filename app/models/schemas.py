@@ -13,7 +13,7 @@ class TagBase(BaseModel):
 
 # Request schemas
 class RawHRVData(BaseModel):
-    user_id: str
+    user_id: str  # This will be the user's email address
     device_info: Dict[str, str]
     recordingSessionId: str
     timestamp: str
@@ -21,6 +21,23 @@ class RawHRVData(BaseModel):
     heartRate: Optional[int] = None
     motionArtifacts: bool = False
     tags: List[str] = []
+    
+    class Config:
+        schema_extra = {
+            "example": {
+                "user_id": "user@example.com",  # Changed to show it's an email
+                "device_info": {
+                    "model": "Polar H10",
+                    "firmwareVersion": "2.1.9"
+                },
+                "recordingSessionId": "session_001",
+                "timestamp": "2025-03-25T23:10:00Z",
+                "rrIntervals": [812, 805, 798, 790],
+                "heartRate": 74,
+                "motionArtifacts": False,
+                "tags": ["Sleep"]
+            }
+        }
 
 # Response schemas
 class SessionMetrics(BaseModel):

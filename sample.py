@@ -7,12 +7,12 @@ def process_sample_data():
     """Process a sample HRV session and print the results"""
     # Create sample data
     sample_data = RawHRVData(
-        user_id="user_test",
+        user_id="Ashkan",
         device_info={
             "firmwareVersion": "2.1.9",
             "model": "Polar H10"
         },
-        recordingSessionId="sample_session_001",
+        recordingSessionId="Ashkan_sample_session_001",
         timestamp="2025-03-25T23:10:00Z",
         rrIntervals=[812, 805, 798, 790, 803, 815, 825, 833, 826, 819, 
                      810, 805, 795, 788, 782, 775, 780, 785, 790, 798, 

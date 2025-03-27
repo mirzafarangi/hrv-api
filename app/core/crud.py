@@ -6,19 +6,25 @@ from app.models.schemas import RawHRVData, UserCreate, DeviceCreate, TagCreate
 from datetime import datetime
 import uuid
 
-def get_or_create_user(db: Session, user_id: str) -> User:
-    """Get a user by ID or create if not exists"""
-    user = db.query(User).filter(User.id == user_id).first()
+def get_or_create_user(db: Session, email: str) -> User:
+    """Get a user by email (used as user_id) or create if not exists"""
+    # First check if user exists with this email
+    user = db.query(User).filter(User.email == email).first()
+    
     if not user:
-        # Create a basic user if not found
+        # Generate a username from the email (part before @)
+        username = email.split('@')[0]
+        
+        # Create a new user with email as both id and email
         user = User(
-            id=user_id,
-            username=f"user_{user_id[:8]}",
-            email=f"user_{user_id[:8]}@example.com"
+            id=email,  # Using email as the ID
+            username=username,
+            email=email
         )
         db.add(user)
         db.commit()
         db.refresh(user)
+    
     return user
 
 def get_or_create_device(db: Session, device_info: Dict[str, str]) -> Device:

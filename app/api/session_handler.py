@@ -1,5 +1,6 @@
 # app/api/session_handler.py
 from fastapi import APIRouter, HTTPException, Depends
+from email_validator import validate_email, EmailNotValidError
 from sqlalchemy.orm import Session
 from app.models.schemas import RawHRVData, SessionRecord
 from app.core.processor import HRVSessionProcessor
@@ -171,4 +172,26 @@ async def get_database_stats(db: Session = Depends(get_db)):
             }
             for session in latest_sessions
         ]
+    }
+
+
+
+def validate_user_email(email: str, db: Session) -> tuple[bool, str]:
+    """Validate email format and check if it already exists"""
+    try:
+        # Validate email format
+        validate_email(email)
+        return True, ""
+    except EmailNotValidError as e:
+        return False, str(e)
+
+@router.post("/validate-email", response_model=dict)
+async def validate_email_endpoint(data: dict, db: Session = Depends(get_db)):
+    """Endpoint to validate an email before using it as user_id"""
+    email = data.get("email", "")
+    valid, message = validate_user_email(email, db)
+    
+    return {
+        "valid": valid,
+        "message": message
     }
