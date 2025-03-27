@@ -161,13 +161,6 @@ The application uses several tables:
 - `hrv_metrics`: Calculated HRV metrics
 - `rr_intervals`: Raw RR interval data
 
-## Development Roadmap
-
-- [ ] Add user authentication
-- [ ] Implement batch processing for large datasets
-- [ ] Add time-series visualization endpoints
-- [ ] Create statistical analysis tools for multiple sessions
-- [ ] Develop trend analysis functionality
 
 ## License
 
@@ -175,4 +168,4 @@ MIT License
 
 ## Contributors
 
-- Your Name - Initial work
+- Meta-Mar - beheshti@posteo.de
