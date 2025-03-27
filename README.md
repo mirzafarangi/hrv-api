@@ -83,7 +83,7 @@ hrv_metrics_api/
    uvicorn main:app --reload
    ```
 
-7. Access the API documentation at http://localhost:8000/docs
+7. Access the API documentation at https://hrv-metrics-api.onrender.com/docs
 
 ## Deployment on Render
 
