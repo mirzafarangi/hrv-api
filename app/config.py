@@ -10,7 +10,7 @@ class Settings(BaseSettings):
     # Database settings
     DATABASE_URL: str = os.getenv(
         "DATABASE_URL", 
-        "postgresql://ashkan:password@dpg-cvhtllqqecs73d4r9a0-a:5432/hrv_records_db"
+        "<Your Own DB_URL>"
     )
     
     # API settings

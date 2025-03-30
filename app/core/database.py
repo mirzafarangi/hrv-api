@@ -11,7 +11,7 @@ load_dotenv()
 # Get database connection details from environment variables
 DATABASE_URL = os.getenv(
     "DATABASE_URL",
-    "postgresql://ashkan:password@dpg-cvhtllqqecs73d4r9a0-a:5432/hrv_records_db"
+    "<Your Own DB_URL>"
 )
 
 # For SQLAlchemy 1.4.x, need to replace postgres:// with postgresql://
